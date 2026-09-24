@@ -1,0 +1,32 @@
+name: Build APK
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Restore project structure
+        run: |
+          set -e
+          mkdir -p gradle "app/src/main/java/com/example/huaweimodemswitch/ui/theme" "app/src/main/java/com/example/huaweimodemswitch/usb" app/src/main/res/values app/src/main/res/xml mv root_build.gradle.kts build.gradle.kts mv root_settings.gradle.kts settings.gradle.kts mv root_gradle.properties gradle.properties mv gradle_libs.versions.toml gradle/libs.versions.toml mv app_build.gradle.kts app/build.gradle.kts mv main_AndroidManifest.xml app/src/main/AndroidManifest.xml mv kotlin_MainActivity.kt "app/src/main/java/com/example/huaweimodemswitch/MainActivity.kt" mv ui_UsbScreen.kt "app/src/main/java/com/example/huaweimodemswitch/ui/UsbScreen.kt" mv ui_UsbState.kt "app/src/main/java/com/example/huaweimodemswitch/ui/UsbState.kt" mv ui_UsbViewModel.kt "app/src/main/java/com/example/huaweimodemswitch/ui/UsbViewModel.kt" mv theme_Theme.kt "app/src/main/java/com/example/huaweimodemswitch/ui/theme/Theme.kt" mv usb_HuaweiModeSwitcher.kt "app/src/main/java/com/example/huaweimodemswitch/usb/HuaweiModeSwitcher.kt" mv usb_UsbDeviceMapper.kt "app/src/main/java/com/example/huaweimodemswitch/usb/UsbDeviceMapper.kt" mv usb_UsbModels.kt "app/src/main/java/com/example/huaweimodemswitch/usb/UsbModels.kt" mv res_values_strings.xml app/src/main/res/values/strings.xml mv res_values_themes.xml app/src/main/res/values/themes.xml mv res_xml_device_filter.xml app/src/main/res/xml/device_filter.xml - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.10.2"
+
+      - name: Build debug APK
+        run: gradle assembleDebug --stacktrace
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: HuaweiModemSwitch-APK
+          path: app/build/outputs/apk/debug/*.apk retention-days: 30
