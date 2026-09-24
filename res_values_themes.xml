@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The Activity window uses a plain Material theme; the Compose UI
+         applies its own dynamic color scheme on top. -->
+    <style name="Theme.HuaweiModemSwitcher" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>

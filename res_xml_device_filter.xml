@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- USB device filter for automatic app launch.
+     0x12D1 = 4785 decimal, 0x1F01 = 7937 decimal -->
+<resources>
+    <!-- Huawei modem in initial Mass Storage mode (the switch target) -->
+    <usb-device vendor-id="4785" product-id="7937" />
+    <!-- Any other Huawei product ID, so the app also fires after the device
+         re-enumerates in modem/network mode with its new PID -->
+    <usb-device vendor-id="4785" />
+</resources>
